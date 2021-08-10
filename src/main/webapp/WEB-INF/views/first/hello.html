@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+Hello!
+
+<a href="/first/goodbye">Say goodbye</a> or <a href="/exit">Exit</a>
+or <a href="/first/hello?name=Mikhail&surname=Besedin">Say hello with parameters </a>
+<p>text</p>
+<p th:text="${message}"/> <!-- атрибут th - это thymelef, он возьмет значение по ключю (из класса FirstController) и вставит его в этот тэг <p>,
+ а так как в этот тэг мы ничего не вставляем, можно его сделать НЕпарным -->
+
+</body>
+</html>
