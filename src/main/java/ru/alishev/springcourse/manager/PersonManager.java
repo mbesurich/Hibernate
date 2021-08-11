@@ -57,12 +57,12 @@ public class PersonManager {
 //        -------------------------------------------
 //        добавление объекта с полем дата в БД
 //        -------------------------------------------
-            String theDateOfBirthStr = "28/07/1989";
+            String theDateOfBirthStr = "29/08/1990";
 
             Date theDateOfBirth = null;
             try {
                 theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
-                PersonEntity tempPerson = new PersonEntity("Sam", "Barbarisky", "Sam@gmail.com", theDateOfBirth);
+                PersonEntity tempPerson = new PersonEntity("Samy", "Barbarisky", "Samy@gmail.com", theDateOfBirth);
                 saveObjectsHibernate(tempPerson, factory);
             } catch (ParseException e) {
                 e.printStackTrace();

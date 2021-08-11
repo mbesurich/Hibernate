@@ -6,7 +6,8 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost/register</property>
+<!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost/register</property>-->
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost/hibernateTest</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">pg4002qaz</property>
         <property name="hibernate.connection.pool_size">1</property>
