@@ -26,8 +26,6 @@ public class Technicalrecuirment {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     private PersonEntity personEntity;
-//    @Column(name = "person_id")
-//    int person_id;
 
     public Technicalrecuirment() {
     }
@@ -95,7 +93,6 @@ public class Technicalrecuirment {
                 ", msoffice=" + msoffice +
                 ", yearsofworking=" + yearsofworking +
                 ", department='" + department + '\'' +
-                ", personEntity=" + personEntity +
                 '}';
     }
 }

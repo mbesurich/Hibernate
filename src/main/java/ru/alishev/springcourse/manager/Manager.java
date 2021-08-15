@@ -2,10 +2,6 @@ package ru.alishev.springcourse.manager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import ru.alishev.springcourse.entity.PersonEntity;
@@ -21,21 +17,28 @@ public class Manager {
     public static void main(String[] args) {
 
         SessionFactory factory = null;
+
         try {
 //        создание SessionFactory
             factory = udemySessionFactory();
 
+//            удаление объекта через TechnicalrequirmentObject
+//            deleteTechnicalrequirmentObjectHibernate(8, factory);
+
+//            удаление объекта через PersonEntity
+//            deletePersonEntityObjectHibernate(8, factory);
+
 //          create Objects
-            String theDateOfBirthStr = "09/08/1880";
+            String theDateOfBirthStr = "15/12/1581";
 
 //              creating 1st object
             Date theDateOfBirth = null;
             try {
                 theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
-                PersonEntity personEntity = new PersonEntity("Ivan", "Ivanov", "Ivan@gmail.com", theDateOfBirth);
+                PersonEntity personEntity = new PersonEntity("Petr", "Petrov", "Petr@gmail.com", theDateOfBirth);
 
 //              creating 2nd object
-                Technicalrecuirment technicalrecuirment = new Technicalrecuirment(false, true, 5.6, "SomeDepartment");
+                Technicalrecuirment technicalrecuirment = new Technicalrecuirment(false, true, 5.5, "SomeDepartment");
 
 //              associate/link these 2 objects together
                 technicalrecuirment.setPersonEntity(personEntity);
@@ -66,7 +69,7 @@ public class Manager {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
 //      --------------------------------------------------------------------------------------------------------
-//      !!!!!   NOTE:   save PeronEntity - will also save technicalRequirement object because of CascadeType.ALL
+//      !!!!!   NOTE:   save technicalRequirement  - will also save PeronEntity object because of CascadeType.ALL
 //      --------------------------------------------------------------------------------------------------------
         session.save((Technicalrecuirment) object);
         System.out.println("Saved technicalRequirement: " + (Technicalrecuirment) object);
@@ -134,13 +137,44 @@ public class Manager {
         session.close();
     }
 
-    public static void deleteObjectHibernate(int id, SessionFactory factory) {
+    public static void deleteTechnicalrequirmentObjectHibernate(int id, SessionFactory factory) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
+
+        try {
+            Technicalrecuirment technicalrecuirment = session.get(Technicalrecuirment.class, id);
+//      --------------------------------------------------------------------------------------------------------
+//      !!!!!   NOTE:   delete technicalRequirement  - will also delete PeronEntity object because of CascadeType.ALL
+//      --------------------------------------------------------------------------------------------------------
+            session.delete(technicalrecuirment);
+//        PersonEntity personEntity = session.get(PersonEntity.class, id);
+//        session.delete(personEntity);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+
+    public static void deletePersonEntityObjectHibernate(int id, SessionFactory factory) {
+        Session session = factory.getCurrentSession();
+        session.beginTransaction();
+
+        try {
+//      --------------------------------------------------------------------------------------------------------
+//      !!!!!   NOTE:   delete personEntity   - will also delete technicalRequirement object because of CascadeType.ALL
+//      --------------------------------------------------------------------------------------------------------
         PersonEntity personEntity = session.get(PersonEntity.class, id);
         session.delete(personEntity);
-        session.getTransaction().commit();
-        session.close();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
     }
 
     public static void deleteObjectNameByHQuery(int id, SessionFactory factory) {

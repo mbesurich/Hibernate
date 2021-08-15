@@ -29,6 +29,9 @@ public class PersonEntity {
     @Email
     private String email;
 
+    @OneToOne(mappedBy = "personEntity", cascade = CascadeType.ALL)
+    private Technicalrecuirment technicalrecuirment;
+
     public PersonEntity() {
     }
 
@@ -41,11 +44,11 @@ public class PersonEntity {
 
     }
 
-    public int getId() {
+    public int getPersonId() {
         return personId;
     }
 
-    public void setId(int personId) {
+    public void setPersonId(int personId) {
         this.personId = personId;
     }
 
@@ -79,6 +82,14 @@ public class PersonEntity {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Technicalrecuirment getTechnicalrecuirment() {
+        return technicalrecuirment;
+    }
+
+    public void setTechnicalrecuirment(Technicalrecuirment technicalrecuirment) {
+        this.technicalrecuirment = technicalrecuirment;
     }
 
     @Override

@@ -15,6 +15,7 @@
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="ru.alishev.springcourse.entity.PersonEntity" />
+        <mapping class="ru.alishev.springcourse.entity.Technicalrecuirment" />
 
         <!--        <mapping resource="person.hbm.xml" />-->
     </session-factory>
