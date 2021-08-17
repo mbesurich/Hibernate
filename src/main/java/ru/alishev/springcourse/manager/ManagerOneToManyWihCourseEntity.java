@@ -74,7 +74,6 @@ public class ManagerOneToManyWihCourseEntity {
         } finally {
             factory.close();
         }
-
     }
 
     private static SessionFactory udemySessionFactory() {
