@@ -16,6 +16,7 @@
 
         <mapping class="ru.alishev.springcourse.entity.PersonEntity" />
         <mapping class="ru.alishev.springcourse.entity.Technicalrecuirment" />
+        <mapping class="ru.alishev.springcourse.entity.Course" />
 
         <!--        <mapping resource="person.hbm.xml" />-->
     </session-factory>

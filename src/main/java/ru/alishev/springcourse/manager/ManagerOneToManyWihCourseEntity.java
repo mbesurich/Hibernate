@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-public class Manager {
+public class ManagerOneToManyWihCourseEntity {
 
     public static void main(String[] args) {
 
@@ -33,17 +33,16 @@ public class Manager {
 //            getObjectHibernate(14,factory);
 
 //          create Objects__________________________________
-/*
-            String theDateOfBirthStr = "15/12/1581";
+/*            String theDateOfBirthStr = "7/12/777";
 
 //              creating 1st object
             Date theDateOfBirth = null;
             try {
                 theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
-                PersonEntity personEntity = new PersonEntity("Petr", "Petrov", "Petr@gmail.com", theDateOfBirth);
+                PersonEntity personEntity = new PersonEntity("Petrio", "Petrovio", "Petrio@gmail.com", theDateOfBirth);
 
 //              creating 2nd object
-                Technicalrecuirment technicalrecuirment = new Technicalrecuirment(false, true, 5.5, "SomeDepartment");
+                Technicalrecuirment technicalrecuirment = new Technicalrecuirment(true, true, 25.5, "SomeDepartment");
 
 //              associate/link these 2 objects together
                 technicalrecuirment.setPersonEntity(personEntity);
@@ -51,9 +50,30 @@ public class Manager {
                 saveObjectsHibernate(technicalrecuirment, factory);
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
 //          create Objects__________________________________
-*/
+
+//              add courses into Person
+            Session session = factory.getCurrentSession();
+            try {
+                session.beginTransaction();
+                PersonEntity personEntity = session.get(PersonEntity.class, 17);
+                Course course1 = new Course("firstCourse");
+                Course course2 = new Course("secondCourse");
+                Course course3 = new Course("thirdCourse");
+                personEntity.add(course1);
+                personEntity.add(course2);
+                personEntity.add(course3);
+                session.save(course1);
+                session.save(course2);
+                session.save(course3);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+
 
 //            getObjectListHibernate(factory);
         } finally {
@@ -71,6 +91,8 @@ public class Manager {
                 .buildSessionFactory();
         return factory;
     }
+
+    //    методы ниже ещё не переделал -> ...
 
     private static void saveObjectsHibernate(Object object, SessionFactory factory) {
 //        SessionFactory factory = udemySessionFactory();
@@ -147,10 +169,6 @@ public class Manager {
         }
 
     }
-
-    //    методы ниже ещё не переделал -> ...
-
-
 
     public static List<? extends Object> getObjectListHibernate(SessionFactory factory) {
         Session session = factory.getCurrentSession();

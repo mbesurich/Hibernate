@@ -4,7 +4,15 @@ import ru.alishev.springcourse.util.DateUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+// define fields
+// define constructors
+// define getters and setters
+// define tostring
+// annotate fields
 
 @Entity
 @Table(name = "person")
@@ -31,6 +39,12 @@ public class PersonEntity {
 
     @OneToOne(mappedBy = "personEntity", cascade = CascadeType.ALL)
     private Technicalrecuirment technicalrecuirment;
+
+    // в качестве аргумента сюда передаётся название поля из @JoinColumn(name = "person_id") private PersonEntity personEntity;
+    @OneToMany(mappedBy = "personEntity",
+            cascade = {CascadeType.DETACH, CascadeType.DETACH,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<Course> courses;
 
     public PersonEntity() {
     }
@@ -90,6 +104,24 @@ public class PersonEntity {
 
     public void setTechnicalrecuirment(Technicalrecuirment technicalrecuirment) {
         this.technicalrecuirment = technicalrecuirment;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+//    add convenience methods for bi-directional relationship
+
+    public void add(Course course) {
+        if (course == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+        course.setPersonEntity(this);
     }
 
     @Override

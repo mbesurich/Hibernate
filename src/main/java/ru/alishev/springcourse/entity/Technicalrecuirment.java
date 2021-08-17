@@ -2,6 +2,12 @@ package ru.alishev.springcourse.entity;
 
 import javax.persistence.*;
 
+// define fields
+// define constructors
+// define getters and seters
+// define tostring
+// annotate fields
+
 @Entity
 @Table(name = "technicalrecuirment")
 public class Technicalrecuirment {
