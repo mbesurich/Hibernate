@@ -10,6 +10,7 @@ import ru.alishev.springcourse.entity.Technicalrecuirment;
 import ru.alishev.springcourse.util.DateUtils;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,27 +54,21 @@ public class ManagerOneToManyWihCourseEntity {
             }*/
 //          create Objects__________________________________
 
-//              add courses into Person
-            Session session = factory.getCurrentSession();
-            try {
-                session.beginTransaction();
-                PersonEntity personEntity = session.get(PersonEntity.class, 17);
-                Course course1 = new Course("firstCourse");
-                Course course2 = new Course("secondCourse");
-                Course course3 = new Course("thirdCourse");
-                personEntity.add(course1);
-                personEntity.add(course2);
-                personEntity.add(course3);
-                session.save(course1);
-                session.save(course2);
-                session.save(course3);
-                session.getTransaction().commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                session.close();
-            }
+//              add courses into Person __________________________________
+/*            Course course1 = new Course("firstCourse");
+            Course course2 = new Course("secondCourse");
+            Course course3 = new Course("thirdCourse");
+            addCoursesIntoPerson(factory, 17, course1, course2, course3);*/
+//              add courses into Person __________________________________
 
+//              get courses into Person __________________________________
+            List<Course> courses = getCourses(factory, 17);
+            courses.forEach(System.out::println);
+//              get courses into Person __________________________________
+
+//              delete course from DB, but Person will keep existing __________________________________
+//            deleteCourseFromDB(factory, 1);
+//              delete course from DB, but Person will keep existing __________________________________
 
 //            getObjectListHibernate(factory);
         } finally {
@@ -90,6 +85,67 @@ public class ManagerOneToManyWihCourseEntity {
                 .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
         return factory;
+    }
+
+    private static void addCoursesIntoPerson(SessionFactory factory, int idOfPerson, Course...courses) {
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            PersonEntity personEntity = session.get(PersonEntity.class, 17);
+//            Course course1 = new Course("firstCourse");
+//            Course course2 = new Course("secondCourse");
+//            Course course3 = new Course("thirdCourse");
+            for (Course course : courses){
+                personEntity.add(course);
+            }
+            for (Course course : courses){
+                session.save(course);
+            }
+//            personEntity.add(course1);
+//            personEntity.add(course2);
+//            personEntity.add(course3);
+//            session.save(course1);
+//            session.save(course2);
+//            session.save(course3);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    private static void deleteCourseFromDB(SessionFactory factory, int idOfCourse) {
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            Course course = session.get(Course.class, idOfCourse);
+            session.delete(course);
+            session.getTransaction().commit();
+            System.out.println("course was deleted: " + course);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    private static List<Course> getCourses(SessionFactory factory, int idOfPerson) {
+        List<Course> courses = null;
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            PersonEntity personEntity = session.get(PersonEntity.class, 17);
+//            System.out.println("person: " + personEntity);
+            courses = personEntity.getCourses();
+//            System.out.println("Courses: " + courses);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return courses;
     }
 
     //    методы ниже ещё не переделал -> ...

@@ -43,7 +43,7 @@ public class PersonEntity {
     // в качестве аргумента сюда передаётся название поля из @JoinColumn(name = "person_id") private PersonEntity personEntity;
     @OneToMany(mappedBy = "personEntity",
             cascade = {CascadeType.DETACH, CascadeType.DETACH,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private List<Course> courses;
 
     public PersonEntity() {
