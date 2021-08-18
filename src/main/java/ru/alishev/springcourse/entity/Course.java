@@ -1,10 +1,12 @@
 package ru.alishev.springcourse.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // define fields
 // define constructors
-// define getters and seters
+// define getters and setters
 // define tostring
 // annotate fields
 
@@ -23,6 +25,10 @@ public class Course {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "person_id")
     private PersonEntity personEntity;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "courses_id")
+    private List<Review> reviews;
 
     public Course() {
     }
@@ -53,6 +59,22 @@ public class Course {
 
     public void setPersonEntity(PersonEntity personEntity) {
         this.personEntity = personEntity;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+//    add convenience method
+    public void addReviews(Review review){
+        if (reviews == null){
+            reviews = new ArrayList<>();
+        }
+        reviews.add(review);
     }
 
     @Override
